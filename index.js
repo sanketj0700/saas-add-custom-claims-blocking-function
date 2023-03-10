@@ -30,7 +30,7 @@ const getDomainsForTenantUser = async (firestore, email) => {
 }
 
 // beforeCreate
-exports.beforeCreate = authClient.functions().beforeSignInHandler(async (user, context) => {
+exports.beforeSignIn = authClient.functions().beforeSignInHandler(async (user, context) => {
   try {
     // Initialize Firestore client
     const firestore = initFirestore();
