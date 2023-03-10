@@ -1,7 +1,7 @@
 // module imports
-import gcipCloudFunctions from 'gcip-cloud-functions';
-import { getFirestore } from "firebase-admin/firestore";
-import { initializeApp, applicationDefault } from "firebase-admin/app";
+const gcipCloudFunctions = require('gcip-cloud-functions');
+const { getFirestore } = require("firebase-admin/firestore");
+const { initializeApp, applicationDefault } = require("firebase-admin/app");
 
 // Initializing Auth Client
 const authClient = new gcipCloudFunctions.Auth();
@@ -29,7 +29,7 @@ const getDomainsForTenantUser = async (firestore, email) => {
   return Array.from(new Set(domainsArray));
 }
 
-// beforeCreate
+// beforeSignIn
 exports.beforeSignIn = authClient.functions().beforeSignInHandler(async (user, context) => {
   try {
     // Initialize Firestore client
