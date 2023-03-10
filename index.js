@@ -30,17 +30,17 @@ const getDomainsForTenantUser = async (firestore, email) => {
 }
 
 // beforeCreate
-exports.beforeCreate = authClient.functions().beforeCreateHandler((user, context) => {
+exports.beforeCreate = authClient.functions().beforeSignInHandler(async (user, context) => {
   try {
     // Initialize Firestore client
     const firestore = initFirestore();
 
     // validDomains - domains that are allowed for the user email
-    const validDomains = getDomainsForTenantUser(firestore, user.email);
+    const validDomains = await getDomainsForTenantUser(firestore, user.email);
 
     // setting custom claim on user
     return {
-      custmClaims: {
+      sessionClaims: {
         domains: validDomains,
       }
     };
