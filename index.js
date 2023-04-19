@@ -8,20 +8,14 @@ const authClient = new gcipCloudFunctions.Auth();
 
 // initFirestore - Initializes and returns a firestore client instance
 const initFirestore = () => {
-  const db = getFirestore(initializeApp({
-    credential: applicationDefault(),
-  }));
 
+  if (!getApps().length) {
+    initializeApp();
+  }
+
+  const db = getFirestore();
   return db;
 };
-
-// initializing firestore client
-let firestore;
-if (!getApps().length) {
-  firestore = initFirestore();
-} else {
-  firestore = getApp();
-}
 
 // getDomainsForTenantUser - Fetches all the documents with given email frm tenantUser and returns a 
 const getDomainsForTenantUser = async (firestore, email) => {
@@ -40,6 +34,8 @@ const getDomainsForTenantUser = async (firestore, email) => {
 // beforeSignIn
 exports.beforeSignIn = authClient.functions().beforeSignInHandler(async (user, context) => {
   try {
+
+    const firestore = initFirestore();
 
     // validDomains - domains that are allowed for the user email
     console.log(user.email);
