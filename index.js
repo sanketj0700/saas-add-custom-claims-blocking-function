@@ -50,6 +50,7 @@ exports.beforeSignIn = authClient.functions().beforeSignInHandler(async (user, c
       }
     };
   } catch (error) {
+    console.log(error);
     throw new gcipCloudFunctions.https.HttpsError('internal');
   }
 });
